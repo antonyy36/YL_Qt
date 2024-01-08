@@ -1,15 +1,15 @@
 import random
 import sys
-from PyQt5 import uic
+from UI import Ui_MainWindow
 from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QPainter, QColor, QPen
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.painting = False
         self.CirclesButton.clicked.connect(self.run)
 
@@ -28,9 +28,9 @@ class MyWidget(QMainWindow):
     def draw_flag(self, qp):
         pen = QPen()
         pen.setWidth(5)
-        pen.setColor(QColor(255, 255, 0))
-        qp.setPen(pen)
         for i in range(15):
+            pen.setColor(QColor(*[random.randint(0, 255) for i in range(3)]))
+            qp.setPen(pen)
             razm = random.randint(50, 200)
             x, y = random.randint(10, 500), random.randint(10, 500)
             qp.drawEllipse(x, y, razm, razm)
